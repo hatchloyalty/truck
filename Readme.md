@@ -4,8 +4,8 @@ A project to identify the missing transactions.
 
 ## Outline
 
-- [] Export CSV of `transactions` table
-- [] Export CSV of `events` table
+- [x] Export CSV of `transactions` table
+- [x] Export CSV of `events` table
 - [] Import transactions into memory
 - [] Build a set of Transactions by id
 - [] Import events into memory
