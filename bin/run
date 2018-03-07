@@ -1,0 +1,8 @@
+#! /usr/bin/env ruby -w
+
+require '../boot'
+require 'transactions'
+transactions = Transactions.new
+transactions.import
+
+
