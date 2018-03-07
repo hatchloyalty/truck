@@ -6,7 +6,7 @@ A project to identify the missing transactions.
 
 - [x] Export CSV of `transactions` table
 - [x] Export CSV of `events` table
-- [] Import transactions into memory
+- [x] Import transactions into memory
 - [] Build a set of Transactions by id
 - [] Import events into memory
 - [] Filter the events down to only `event_type == transactions`
