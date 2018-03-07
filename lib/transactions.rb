@@ -2,6 +2,7 @@
 
 require 'csv'
 
+# Imports transactions
 class Transactions
   attr_reader :table, :set
   def import
@@ -12,6 +13,6 @@ class Transactions
   end
 
   def build_set
-    @set = @table.map{ |r| r[:id] }
+    @set = @table.map { |r| r[:id] }.to_set
   end
 end

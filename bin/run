@@ -1,8 +1,7 @@
 #! /usr/bin/env ruby -w
+# frozen_string_literal: true
 
 require '../boot'
 require 'transactions'
 transactions = Transactions.new
 transactions.import
-
-
