@@ -1,4 +1,27 @@
 #!/usr/bin/env ruby
 # frozen_string_literal: true
 
+require 'bundler/setup'
 require 'truck'
+require 'transactions'
+require 'events'
+
+txs = Transactions.new
+txs.import
+txs.build_set
+
+evs = Events.new
+evs.import
+evs.select_transactions
+evs.parse_context
+evs.build_set
+
+unmatched_ts = txs.set - evs.set
+unmatched_rows = txs.table.select { |row| unmatched_ts.member?(row[:id]) }
+tx_time = unmatched_rows.collect { |row| [row[:id], row[:created_at]] }
+
+CSV.open('out.csv', 'w') do |csv|
+  tx_time.each do |data|
+    csv << data
+  end
+end

@@ -7,6 +7,8 @@
 /spec/reports/
 /tmp/
 /data/
+# Output
+out.csv
 
 # rspec failure tracking
 .rspec_status

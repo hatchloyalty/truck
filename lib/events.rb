@@ -5,7 +5,7 @@ require 'json'
 
 # Imports and processes events
 class Events
-  attr_reader :table
+  attr_reader :table, :set
   def import
     path = File.expand_path(
       File.join(__FILE__, '..', '..', 'data', 'events.csv')
@@ -19,7 +19,7 @@ class Events
 
   def parse_context
     table.each do |row|
-      r[:context] = JSON.parse(
+      row[:context] = JSON.parse(
         JSON.parse(row[:context]), symbolize_names: true
       )
     end
