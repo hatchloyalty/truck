@@ -2,6 +2,8 @@
 # frozen_string_literal: true
 
 require 'bundler/setup'
+require 'dotenv'
+Dotenv.load
 require 'truck'
 
 # You can add fixtures and/or initialization code here to make experimenting
@@ -13,6 +15,3 @@ require 'events'
 # (If you use this, don't forget to add pry to your Gemfile!)
 require 'pry'
 Pry.start
-
-require 'irb'
-IRB.start(__FILE__)
