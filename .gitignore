@@ -9,6 +9,10 @@
 /data/
 # Output
 out.csv
+.env
+.env*
+!.env.template
+.DS_Store
 
 # rspec failure tracking
 .rspec_status
