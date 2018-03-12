@@ -5,7 +5,5 @@ require 'bundler/setup'
 require 'dotenv'
 Dotenv.load
 require 'truck'
-require 'transactions'
-require 'events'
 
 Truck::Runner.new.run

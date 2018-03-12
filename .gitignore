@@ -8,7 +8,8 @@
 /tmp/
 /data/
 # Output
-out.csv
+*.csv
+
 .env
 .env*
 !.env.template

@@ -4,6 +4,7 @@ PATH
     truck (0.1.0)
       dotenv (~> 2.2.1)
       pg (~> 1.0.0)
+      sequel (~> 5.6.0)
 
 GEM
   remote: https://rubygems.org/
@@ -30,6 +31,7 @@ GEM
       diff-lcs (>= 1.2.0, < 2.0)
       rspec-support (~> 3.7.0)
     rspec-support (3.7.1)
+    sequel (5.6.0)
 
 PLATFORMS
   ruby
