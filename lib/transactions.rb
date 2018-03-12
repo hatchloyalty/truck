@@ -34,7 +34,6 @@ class Transactions
       FROM transactions
       WHERE id in (#{id_list})
     SQL
-    p query
     @conn.exec(query)
   end
 
