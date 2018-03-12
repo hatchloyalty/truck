@@ -28,6 +28,7 @@ class Transactions
   end
 
   def find(ids)
+    return [] if ids.empty?
     id_list = ids.reduce('') { |str, id| str + "'#{id}', " }[0..-3]
     query = <<~SQL
       SELECT id, created_at
