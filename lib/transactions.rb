@@ -24,7 +24,9 @@ class Transactions
       FROM transactions
       WHERE created_at > $1
     SQL
-    @table = @conn.exec(query, [ENV['START_AT']])
+    query += " AND created_at <= $2" if end_at
+    @membership_events = @conn.exec(query, [start_at, end_at].compact)
+    @table = @conn.exec(query, [start_at, end_at].compact)
   end
 
   def find(ids)
@@ -46,5 +48,13 @@ class Transactions
 
   def default_connection
     PG.connect(ENV['CORE_SERVICE_DB_URI'])
+  end
+
+  def start_at
+    ENV['START_AT'].empty? ? nil : ENV['START_AT']
+  end
+
+  def end_at
+    ENV['END_AT'].empty? ? nil : ENV['END_AT']
   end
 end

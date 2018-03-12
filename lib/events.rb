@@ -23,7 +23,8 @@ class Events
       WHERE created_at > $1
       AND event_type = 'transactions'
     SQL
-    @transaction_events = @conn.exec(query, [ENV['START_AT']])
+    query += " AND created_at <= $2" if end_at
+    @transaction_events = @conn.exec(query, [start_at, end_at].compact)
   end
 
   def load_loyalty_events
@@ -33,7 +34,8 @@ class Events
       WHERE created_at > $1
       AND event_type in ('profile_completion', 'wheel_spin', 'additional_questions')
     SQL
-    @loyalty_events = @conn.exec(query, [ENV['START_AT']])
+    query += " AND created_at <= $2" if end_at
+    @loyalty_events = @conn.exec(query, [start_at, end_at].compact)
   end
 
   def load_membership_create_events
@@ -43,7 +45,8 @@ class Events
       where created_at > $1
       and event_type in ('loyalty_events')
     SQL
-    @membership_events = @conn.exec(query, [ENV['START_AT']])
+    query += " AND created_at <= $2" if end_at
+    @membership_events = @conn.exec(query, [start_at, end_at].compact)
   end
 
   def build_transactions_set
@@ -87,5 +90,13 @@ class Events
     JSON.parse(
       JSON.parse(context), symbolize_names: true
     )
+  end
+
+  def start_at
+    ENV['START_AT'].empty? ? nil : ENV['START_AT']
+  end
+
+  def end_at
+    ENV['END_AT'].empty? ? nil : ENV['END_AT']
   end
 end
