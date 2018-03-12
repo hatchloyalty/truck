@@ -11,26 +11,23 @@ module Truck
                 :unmatched_transactions,
                 :unmatched_loyalty_events
     def initialize
-      @transactions = Transactions.new
-      @events = Events.new
-      @loyalty_events = LoyaltyEvents.new
+      @transactions = Transactions.new(from: ENV['START_AT'], to: ENV['END_AT'])
+      @events = Events.new(from: ENV['START_AT'], to: ENV['END_AT'])
+      @loyalty_events = LoyaltyEvents.new(
+        from: ENV['START_AT'],
+        to: ENV['END_AT']
+      )
     end
 
     def collect_unmatched_transactions
-      transactions.load
       transactions.build_set
-
-      events.load
       events.build_set
 
       @unmatched_transactions = transactions.set - events.set
     end
 
     def collect_unmatched_loyalty_events
-      loyalty_events.load
       loyalty_events.build_set
-
-      events.load_loyalty_events
       events.build_loyalty_events_set
       @unmatched_loyalty_events = loyalty_events.set - events.loyalty_events_set
     end
