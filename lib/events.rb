@@ -9,7 +9,9 @@ class Events
   attr_reader :transaction_events,
               :transactions_set,
               :loyalty_events,
-              :loyalty_events_set
+              :loyalty_events_set,
+              :membership_events,
+              :membership_events_set
   def initialize(conn = default_connection)
     @conn = conn
   end
@@ -34,6 +36,16 @@ class Events
     @loyalty_events = @conn.exec(query, [ENV['START_AT']])
   end
 
+  def load_membership_create_events
+    query = <<~SQL
+      SELECT id, context
+      from events
+      where created_at > $1
+      and event_type in ('loyalty_events')
+    SQL
+    @membership_events = @conn.exec(query, [ENV['START_AT']])
+  end
+
   def build_transactions_set
     @transactions_set = transaction_events.map do |row|
       context = parse_context(row['context'])
@@ -52,6 +64,16 @@ class Events
         resource[:type] == 'loyalty_events'
       end
       loyalty_event[:id]
+    end
+  end
+
+  def build_membership_events_set
+    @membership_events_set = membership_events.map do |row|
+      context = parse_context(row['context'])
+      membership = context.find do |resource|
+        resource[:type] == 'memberships'
+      end
+      membership[:id]
     end
   end
 
