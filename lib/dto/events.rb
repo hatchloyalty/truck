@@ -5,8 +5,8 @@ require 'json'
 module DTO
   # Imports and processes events
   class Events < Base
-    attr_reader :loyalty_events_set,
-                :membership_events,
+    attr_reader :transactions_set,
+                :loyalty_events_set,
                 :membership_events_set
 
     def transactions

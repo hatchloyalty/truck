@@ -2,7 +2,7 @@
 
 module DTO
   # Imports memberships
-  class Memberships
+  class Memberships < Base
     attr_reader :set
 
     def find(ids)

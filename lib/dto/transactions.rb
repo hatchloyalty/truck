@@ -2,7 +2,7 @@
 
 module DTO
   # Imports transactions
-  class Transactions
+  class Transactions < Base
     attr_reader :set
 
     def find(ids)

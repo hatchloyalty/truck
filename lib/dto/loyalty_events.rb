@@ -5,10 +5,6 @@ module DTO
   class LoyaltyEvents < Base
     attr_reader :set
 
-    def initialize(conn = default_connection)
-      @conn = conn
-    end
-
     def find(ids)
       table.where(id: ids)
     end
@@ -27,5 +23,4 @@ module DTO
       conn[:loyalty_events]
     end
   end
-
 end
