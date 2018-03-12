@@ -11,6 +11,7 @@ require 'truck'
 
 require 'transactions'
 require 'events'
+require 'loyalty_events'
 
 # (If you use this, don't forget to add pry to your Gemfile!)
 require 'pry'
