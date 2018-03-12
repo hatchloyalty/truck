@@ -15,9 +15,7 @@ module Truck
                 :unmatched_transactions,
                 :unmatched_loyalty_events,
                 :unmatched_memberships
-    def initialize
-      from = Date.parse(ENV['START_AT'])
-      to = ENV['END_AT'].empty? ? Date.today : Date.parse(ENV['END_AT'])
+    def initialize(from: default_from, to: default_to)
       @transactions = DTO::Transactions.new(from: from, to: to)
       @events = DTO::Events.new(from: from, to: to)
       @loyalty_events = DTO::LoyaltyEvents.new(from: from, to: to)
@@ -53,6 +51,14 @@ module Truck
     end
 
     private
+
+    def default_from
+      Date.parse(ENV['START_AT'])
+    end
+
+    def default_to
+      ENV['END_AT'].empty? ? Date.today : Date.parse(ENV['END_AT'])
+    end
 
     def write_transactions
       return print "No missing transactions\n" if unmatched_transactions.empty?
