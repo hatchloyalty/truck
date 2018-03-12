@@ -21,10 +21,6 @@ module Truck
       @unmatched_transactions = transactions.set - events.set
     end
 
-    def fetch_transaction_data(transaction_ids)
-      transactions.find(transaction_ids)
-    end
-
     def run
       collect_unmatched_transactions
       return print 'No missing transactions' if unmatched_transactions.empty?
