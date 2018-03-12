@@ -3,5 +3,29 @@
 require 'truck/version'
 
 module Truck
-  # Your code goes here...
+  # Box to put the run instructions in
+  class Runner
+    def run
+      txs = Transactions.new
+      txs.load
+      txs.build_set
+
+      evs = Events.new
+      evs.load
+      evs.build_set
+
+      unmatched_ts = txs.set - evs.set
+      return print "No missing transactions" unless unmatched_ts
+      transaction_data = txs.find(unmatched_ts)
+      write(transaction_data.map { |row| [row['id'], row['created_at']] })
+    end
+
+    def write(data)
+      CSV.open('out.csv', 'w') do |csv|
+        data.each do |datum|
+          csv << datum
+        end
+      end
+    end
+  end
 end

@@ -27,6 +27,17 @@ class Transactions
     @table = @conn.exec(query, [ENV['START_AT']])
   end
 
+  def find(ids)
+    return [] if ids.empty?
+    id_list = ids.reduce('') { |str, id| str + "'#{id}', " }[0..-3]
+    query = <<~SQL
+      SELECT id, created_at
+      FROM transactions
+      WHERE id in (#{id_list})
+    SQL
+    @conn.exec(query)
+  end
+
   def build_set
     @set = @table.map { |r| r['id'] }.to_set
   end
