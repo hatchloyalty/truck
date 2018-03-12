@@ -37,9 +37,10 @@ module Truck
 
     def run
       collect_unmatched_transactions
-      return print 'No missing transactions' if unmatched_transactions.empty?
+      return print "No missing transactions\n" if unmatched_transactions.empty?
       transaction_data = transactions.find(unmatched_transactions)
       write(transaction_data.map { |row| [row['id'], row['created_at']] })
+      return print "Wrote #{transaction_data.count} transactions\n"
     end
 
     def write(data)
