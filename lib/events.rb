@@ -11,13 +11,6 @@ class Events
     @conn = conn
   end
 
-  def import
-    path = File.expand_path(
-      File.join(__FILE__, '..', '..', 'data', 'events.csv')
-    )
-    @table = CSV.table(path, {})
-  end
-
   def load
     query = <<~SQL
       SELECT id, context
@@ -33,7 +26,10 @@ class Events
       context = JSON.parse(
         JSON.parse(row['context']), symbolize_names: true
       )
-      transaction = context.find { |resource| resource[:type] == 'transactions' }
+      transaction = context.find do |resource|
+        resource[:type] == 'transactions'
+      end
+
       transaction[:id]
     end.to_set
   end
@@ -41,6 +37,6 @@ class Events
   private
 
   def default_connection
-    PG.connect(ENV["RULE_SERVICE_DB_URI"])
+    PG.connect(ENV['RULE_SERVICE_DB_URI'])
   end
 end
