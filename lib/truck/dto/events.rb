@@ -15,9 +15,7 @@ module Truck
       end
 
       def loyalty_events
-        time_scoped.where(event_type: %w[profile_completion
-          wheel_spin
-          additional_questions])
+        time_scoped.exclude(event_type: %w[transactions loyalty_events memberships])
       end
 
       def membership_create_events
@@ -41,6 +39,7 @@ module Truck
           loyalty_event = context.find do |resource|
             resource[:type] == 'loyalty_events'
           end
+          p row if loyalty_event.nil?
           loyalty_event[:id]
         end
       end
