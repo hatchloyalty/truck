@@ -1,9 +1,9 @@
 # frozen_string_literal: true
 
-require 'truck/version'
 require 'date'
-require 'dto'
 require 'csv'
+require 'truck/version'
+require 'truck/dto'
 
 module Truck
   # Box to put the run instructions in

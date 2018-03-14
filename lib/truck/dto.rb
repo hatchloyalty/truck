@@ -1,7 +1,9 @@
 # frozen_string_literal: true
 
 # Data Transfer Objects
-module DTO
+module Truck
+  module DTO
+  end
 end
 
 require 'sequel'

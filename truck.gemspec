@@ -40,5 +40,4 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency 'rspec', '~> 3.0'
   spec.add_development_dependency 'sqlite3', '~> 1.3.13'
   spec.add_development_dependency 'pry', '~> 0.11.3'
-  spec.add_development_dependency 'sqlite3', '~> 1.3.13'
 end
