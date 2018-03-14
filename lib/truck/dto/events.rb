@@ -17,7 +17,9 @@ module Truck
       def loyalty_events
         time_scoped.where(event_type: %w[profile_completion
           wheel_spin
-          additional_questions])
+          additional_questions
+          enrollment_completion
+        ])
       end
 
       def membership_create_events
