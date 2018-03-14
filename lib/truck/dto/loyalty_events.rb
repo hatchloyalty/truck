@@ -10,8 +10,12 @@ module Truck
         table.where(id: ids)
       end
 
+      def loyalty_events
+        time_scoped.exclude(event_type: 'birthday')
+      end
+
       def build_set
-        @set = time_scoped.map { |r| r[:id] }.to_set
+        @set = loyalty_events.map { |r| r[:id] }.to_set
       end
 
       private
