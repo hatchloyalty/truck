@@ -61,6 +61,8 @@ module DTO
     end
 
     def parse_context(context)
+      # Unescape overescaped quotes
+      context.gsub!('\\"', '"') if context.match?(/\\\\"/)
       JSON.parse(
         JSON.parse(context), symbolize_names: true
       )
