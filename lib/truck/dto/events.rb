@@ -33,6 +33,7 @@ module Truck
           transaction = context.find do |resource|
             resource[:type] == 'transactions'
           end
+          next if transaction.nil?
 
           transaction[:id]
         end.to_set
@@ -44,6 +45,7 @@ module Truck
           loyalty_event = context.find do |resource|
             resource[:type] == 'loyalty_events'
           end
+          next if loyalty_event.nil?
           loyalty_event[:id]
         end
       end
@@ -54,6 +56,7 @@ module Truck
           membership = context.find do |resource|
             resource[:type] == 'memberships'
           end
+          next if membership.nil?
           membership[:id]
         end
       end
