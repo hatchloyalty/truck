@@ -19,6 +19,7 @@ module Truck
           wheel_spin
           additional_questions
           enrollment_completion
+          age_gated_offer
         ])
       end
 
