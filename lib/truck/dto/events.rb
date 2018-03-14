@@ -7,8 +7,8 @@ module Truck
     # Imports and processes events
     class Events < Base
       attr_reader :transactions_set,
-        :loyalty_events_set,
-        :membership_events_set
+                  :loyalty_events_set,
+                  :membership_events_set
 
       def transactions
         time_scoped.where(event_type: 'transactions')
@@ -16,11 +16,11 @@ module Truck
 
       def loyalty_events
         time_scoped.where(event_type: %w[profile_completion
-          wheel_spin
-          additional_questions
-          enrollment_completion
-          age_gated_offer
-        ])
+                                         wheel_spin
+                                         additional_questions
+                                         enrollment_completion
+                                         age_gated_offer
+                                         abandoned_membership])
       end
 
       def membership_create_events
