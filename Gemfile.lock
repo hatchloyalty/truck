@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    truck (0.1.0)
+    truck (0.1.2)
       dotenv (>= 1.0.0, < 3)
       pg (>= 0.18, < 2)
       sequel (>= 5, < 6)

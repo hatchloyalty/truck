@@ -61,16 +61,16 @@ module DTO
     end
 
     def parse_context(context)
-      # Unescape overescaped quotes
-      context.gsub!('\\"', '"') if context.match?(/\\\\"/)
-      JSON.parse(
-        JSON.parse(context), symbolize_names: true
-      )
+      # Unescape overescaped json.
+      context.sub!(/^"/, '')
+      context.sub!(/^\\"/, '')
+      context.sub!(/"$/, '')
+      context.delete!('\\')
+      JSON.parse(context, symbolize_names: true)
     end
 
     def table
       conn[:events]
     end
   end
-
 end
