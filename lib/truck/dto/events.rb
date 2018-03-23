@@ -11,7 +11,7 @@ module Truck
                   :membership_events_set
 
       def transactions
-        time_scoped.where(event_type: 'transactions')
+        time_scoped.where(event_type: ['transactions', 'transactions.created'])
       end
 
       def loyalty_events
@@ -20,11 +20,13 @@ module Truck
                                          additional_questions
                                          enrollment_completion
                                          age_gated_offer
-                                         abandoned_membership])
+                                         abandoned_membership
+                                         loyalty_events.created])
       end
 
       def membership_create_events
-        time_scoped.where(event_type: 'loyalty_events')
+        time_scoped.where(event_type: ['loyalty_events',
+                                       'loyalty_events.created'])
       end
 
       def build_transactions_set
@@ -53,15 +55,24 @@ module Truck
       def build_membership_events_set
         @membership_events_set = membership_create_events.map do |row|
           context = parse_context(row[:context])
-          membership = context.find do |resource|
-            resource[:type] == 'memberships'
-          end
-          next if membership.nil?
-          membership[:id]
+          extract_membership_id(context)
         end
       end
 
       private
+
+      def extract_membership_id(context)
+        context.reduce(nil) do |result, resource|
+          if resource.fetch(:type) == 'memberships'
+            resource[:id]
+          elsif resource.fetch(:type) == 'loyalty_events' &&
+                resource.dig(:attributes, :event_type) == 'membership_create'
+            resource.dig(:attributes, :event_data, :membership_id)
+          else
+            result
+          end
+        end
+      end
 
       def default_connection
         Sequel.connect(ENV['RULE_SERVICE_DB_URI'])
